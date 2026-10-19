@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Skor Cekih</title>
+  <meta name="description" content="Papan skor permainan kartu remi cekih untuk 4 pemain, dengan total otomatis.">
+  <meta name="theme-color" content="#06231d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Ikon sekop, hati, wajik, keriting -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="s-spade" viewBox="0 0 24 24"><path d="M12 2C9 6 4 9.5 4 13.5a4 4 0 0 0 6.5 3.1C10.2 18.6 9.4 20 8 22h8c-1.4-2-2.2-3.4-2.5-5.4A4 4 0 0 0 20 13.5C20 9.5 15 6 12 2z"/></symbol>
+    <symbol id="s-heart" viewBox="0 0 24 24"><path d="M12 21.5C5 16 2.5 12.3 2.5 8.8A4.8 4.8 0 0 1 12 6.7a4.8 4.8 0 0 1 9.5 2.1c0 3.5-2.5 7.2-9.5 12.7z"/></symbol>
+    <symbol id="s-diamond" viewBox="0 0 24 24"><path d="M12 2l8 10-8 10-8-10z"/></symbol>
+    <symbol id="s-club" viewBox="0 0 24 24"><path d="M12 2.5a4.3 4.3 0 0 0-3.6 6.7A4.3 4.3 0 1 0 11 15.4c-.2 2.4-1 4.2-2.6 6.1h7.2c-1.6-1.9-2.4-3.7-2.6-6.1a4.3 4.3 0 1 0 2.6-6.2A4.3 4.3 0 0 0 12 2.5z"/></symbol>
+  </svg>
+
+  <div class="bg" aria-hidden="true">
+    <svg class="bg-suit b1"><use href="#s-spade"/></svg>
+    <svg class="bg-suit b2"><use href="#s-heart"/></svg>
+    <svg class="bg-suit b3"><use href="#s-diamond"/></svg>
+    <svg class="bg-suit b4"><use href="#s-club"/></svg>
+  </div>
+
+  <main class="app">
+
+    <header class="top">
+      <div class="brand">
+        <h1>Cekih scoreboard</h1>
+        <p>Ceburin!!!!</p>
+      </div>
+      <div class="top-tools">
+        <div class="seg" role="group" aria-label="Aturan pemenang">
+          <button type="button" id="modeHigh" aria-pressed="true">Tertinggi menang</button>
+          <button type="button" id="modeLow" aria-pressed="false">Terendah menang</button>
+        </div>
+        <button type="button" class="icon-btn" id="themeBtn" aria-label="Ganti tema terang atau gelap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="scores" aria-label="Skor sementara">
+      <article class="pcard p0">
+        <div class="pc-top">
+          <span class="badge"><svg class="suit"><use href="#s-spade"/></svg></span>
+          <input class="pname" id="name0" data-p="0" maxlength="14" autocomplete="off" aria-label="Nama pemain 1">
+        </div>
+        <div class="rank" id="rank0" hidden></div>
+        <div class="ptotal" id="ptot0">0</div>
+        <div class="plast" id="plast0">Belum ada poin</div>
+      </article>
+      <article class="pcard p1">
+        <div class="pc-top">
+          <span class="badge"><svg class="suit"><use href="#s-heart"/></svg></span>
+          <input class="pname" id="name1" data-p="1" maxlength="14" autocomplete="off" aria-label="Nama pemain 2">
+        </div>
+        <div class="rank" id="rank1" hidden></div>
+        <div class="ptotal" id="ptot1">0</div>
+        <div class="plast" id="plast1">Belum ada poin</div>
+      </article>
+      <article class="pcard p2">
+        <div class="pc-top">
+          <span class="badge"><svg class="suit"><use href="#s-diamond"/></svg></span>
+          <input class="pname" id="name2" data-p="2" maxlength="14" autocomplete="off" aria-label="Nama pemain 3">
+        </div>
+        <div class="rank" id="rank2" hidden></div>
+        <div class="ptotal" id="ptot2">0</div>
+        <div class="plast" id="plast2">Belum ada poin</div>
+      </article>
+      <article class="pcard p3">
+        <div class="pc-top">
+          <span class="badge"><svg class="suit"><use href="#s-club"/></svg></span>
+          <input class="pname" id="name3" data-p="3" maxlength="14" autocomplete="off" aria-label="Nama pemain 4">
+        </div>
+        <div class="rank" id="rank3" hidden></div>
+        <div class="ptotal" id="ptot3">0</div>
+        <div class="plast" id="plast3">Belum ada poin</div>
+      </article>
+    </section>
+
+    <section class="table-card">
+      <table class="sheet" id="sheet" aria-label="Tabel skor cekih">
+        <thead>
+          <tr>
+            <th class="rd" scope="col">Ronde</th>
+            <th class="p0" scope="col"><span class="th"><svg class="suit"><use href="#s-spade"/></svg><span id="th0"></span></span></th>
+            <th class="p1" scope="col"><span class="th"><svg class="suit"><use href="#s-heart"/></svg><span id="th1"></span></span></th>
+            <th class="p2" scope="col"><span class="th"><svg class="suit"><use href="#s-diamond"/></svg><span id="th2"></span></span></th>
+            <th class="p3" scope="col"><span class="th"><svg class="suit"><use href="#s-club"/></svg><span id="th3"></span></span></th>
+          </tr>
+        </thead>
+        <tbody id="body"></tbody>
+        <tfoot>
+          <tr>
+            <td class="lbl">Total</td>
+            <td class="p0" id="tot0">0</td>
+            <td class="p1" id="tot1">0</td>
+            <td class="p2" id="tot2">0</td>
+            <td class="p3" id="tot3">0</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="btn primary" id="finishBtn">Selesai</button>
+      <button type="button" class="btn" id="addRound">Tambah ronde</button>
+      <button type="button" class="btn" id="undoBtn" disabled>Urungkan</button>
+      <button type="button" class="btn danger" id="resetAsk">Kosongkan skor</button>
+      <span class="confirm" id="resetBox" hidden>
+        Semua skor dihapus, nama pemain tetap.
+        <button type="button" class="btn danger" id="resetYes">Ya, kosongkan</button>
+        <button type="button" class="btn" id="resetNo">Batal</button>
+      </span>
+    </div>
+    <p class="note">Skor tersimpan otomatis di perangkat ini.</p>
+
+    <section class="history" aria-labelledby="histTitle">
+      <div class="hist-head">
+        <h2 id="histTitle">Riwayat permainan</h2>
+        <button type="button" class="btn small danger" id="histClear" hidden>Hapus semua</button>
+      </div>
+      <p class="hist-empty" id="histEmpty">Belum ada permainan yang selesai. Tekan Selesai saat permainan berakhir untuk menyimpannya di sini.</p>
+      <div class="hist-list" id="histList"></div>
+    </section>
+
+  </main>
+
+  <div class="dock" id="dock" hidden>
+    <div class="dock-in">
+      <div class="dock-top">
+        <span class="where" id="where"></span>
+        <span class="tools">
+          <button type="button" class="tool icon" id="undoDock" aria-label="Urungkan" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="tool" id="flip" aria-label="Ubah plus atau minus">+/-</button>
+          <button type="button" class="tool" id="typeMode" aria-pressed="false" hidden>Ketik</button>
+          <button type="button" class="tool" id="clear">Hapus</button>
+        </span>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+
+  <dialog class="finish" id="finish" aria-labelledby="finTitle">
+    <div class="fin-crown"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg></div>
+    <p class="fin-label" id="finTitle">Pemenang</p>
+    <h2 class="fin-name" id="finName"></h2>
+    <p class="fin-sub" id="finSub"></p>
+    <ol class="fin-list" id="finList"></ol>
+    <div class="fin-actions">
+      <button type="button" class="btn primary" id="finSave">Simpan dan mulai baru</button>
+      <button type="button" class="btn" id="finBack">Kembali ke permainan</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<span>© Rendy.dev</span>
+
+</body>
+</html>
